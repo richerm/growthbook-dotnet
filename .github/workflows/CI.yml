@@ -33,4 +33,12 @@ jobs:
     - name: Test
       run: dotnet test --no-build --configuration Release --verbosity normal
     - name: Pack
-      run: dotnet pack --configuration Release
+      run: dotnet pack --configuration Release /p:VersionPrefix=${{ steps.gitversion.outputs.NuGetVersion }}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: nuget
+        path: GrowthBook/bin/Release/*.nupkg
+    - uses: actions/upload-artifact@v2
+      with:
+        name: binaries
+        path: GrowthBook/bin/Release/netstandard2.0
